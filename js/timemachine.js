@@ -4,6 +4,11 @@ var timeMachine = (function timeMachine(today, locale){
 
   var _date = today;
   var _locale = locale;
+  
+
+  function _getDateWithInternationalFormat () {
+    return _get('year','numeric') + '-' + _get('month','2-digit') + '-' + _get('day','2-digit');
+  }
 
   function _setDate(date){
     date = date.split('-');
@@ -71,6 +76,7 @@ var timeMachine = (function timeMachine(today, locale){
     getAllMonthsOfYear: _getAllMonthsOfYear,
     getYear: _getYear,
     getFullDate: _getFullDate,
+    getDateWithInternationalFormat: _getDateWithInternationalFormat,
     setDate: _setDate,
     getLocale: _getLocale,
     setLocale: _setLocale
