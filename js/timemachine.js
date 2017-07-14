@@ -4,7 +4,14 @@ var timeMachine = (function timeMachine(today, locale){
 
   var _date = today;
   var _locale = locale;
+
+  function _reboot () {
+    _date = new Date();
+  }
   
+  function _getTime () {
+    return _date.getHours() + 'h' + _date.getMinutes() + 'min' + _date.getSeconds() + 'seg';
+  }
 
   function _getDateWithInternationalFormat () {
     return _get('year','numeric') + '-' + _get('month','2-digit') + '-' + _get('day','2-digit');
@@ -69,6 +76,7 @@ var timeMachine = (function timeMachine(today, locale){
   }
 
   return {
+    getTime: _getTime,
     getPrimitiveDate: _getPrimitiveDate,
     getDay: _getDay,
     getWeekDay: _getWeekDay,
@@ -79,7 +87,8 @@ var timeMachine = (function timeMachine(today, locale){
     getDateWithInternationalFormat: _getDateWithInternationalFormat,
     setDate: _setDate,
     getLocale: _getLocale,
-    setLocale: _setLocale
+    setLocale: _setLocale,
+    reboot: _reboot
   };
 
 })(new Date(), 'pt-br');
