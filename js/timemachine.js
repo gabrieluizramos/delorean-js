@@ -1,10 +1,10 @@
-var timeMachine = (function(today, locale){
+var timeMachine = (function timeMachine(today, locale){
   
   'use strict';
 
   var _date = today;
   var _locale = locale;
-  
+
   function _setDate(date){
     date = date.split('-');
     date = date[1] + '/' + date[2] + '/' + date[0];
@@ -49,11 +49,26 @@ var timeMachine = (function(today, locale){
     return _get('weekday', (type || 'long'));
   }
 
+  function _getAllMonthsOfYear(type){
+    var monthsNames = [];
+    var realDate = ( _date.getMonth() + 1 ) + '/' + _date.getDate() + '/' + _date.getFullYear();
+
+    for ( var months = 1 ; months < 12 ; months++ ) {
+      _setDate(months +'/01/2017');
+      monthsNames.push(_getMonth(type));
+    }
+    
+    _setDate(realDate);
+    
+    return monthsNames;
+  }
+
   return {
     getPrimitiveDate: _getPrimitiveDate,
     getDay: _getDay,
     getWeekDay: _getWeekDay,
     getMonth: _getMonth,
+    getAllMonthsOfYear: _getAllMonthsOfYear,
     getYear: _getYear,
     getFullDate: _getFullDate,
     setDate: _setDate,
