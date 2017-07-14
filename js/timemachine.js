@@ -53,7 +53,7 @@ var timeMachine = (function timeMachine(today, locale){
     var monthsNames = [];
     var realDate = ( _date.getMonth() + 1 ) + '/' + _date.getDate() + '/' + _date.getFullYear();
 
-    for ( var months = 1 ; months < 12 ; months++ ) {
+    for ( var months = 1 ; months <= 12 ; months++ ) {
       _setDate(months +'/01/2017');
       monthsNames.push(_getMonth(type));
     }
