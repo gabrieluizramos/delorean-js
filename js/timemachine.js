@@ -4,6 +4,7 @@ var timeMachine = (function timeMachine(today, locale){
 
   var _date = today;
   var _locale = locale;
+  var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
 
   function _reboot () {
     _date = new Date();
@@ -20,7 +21,7 @@ var timeMachine = (function timeMachine(today, locale){
   function _setDate(date){
     date = date.split('-');
     date = date[1] + '/' + date[2] + '/' + date[0];
-    _date = new Date(date);
+    _date = new Date(Date.parse(date).toLocaleString().replace(/\u200E/g, ''));
     
     return true;
   }
