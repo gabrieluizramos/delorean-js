@@ -6,7 +6,7 @@ var timeMachine = (function timeMachine(today, locale){
   var _locale = locale;
 
   // Bug fixes for IE
-  var _navigatorIsIE = true;
+  var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
   var _IEMonths = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
   var _IEWeekDays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
 
