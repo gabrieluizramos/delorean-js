@@ -39,7 +39,9 @@ var timeMachine = (function timeMachine(today, locale){
   }
 
   function _get(whatYouWant, type){
-    return _date.toLocaleString(_locale , {[whatYouWant]: type});
+    var dateObj = {};
+    dateObj[whatYouWant] = type;
+    return _date.toLocaleString(_locale , dateObj);
   }
 
   function _getFullDate(){
