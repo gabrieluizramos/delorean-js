@@ -4,18 +4,79 @@ var timeMachine = (function timeMachine(today, locale){
 
   var _date = today;
   var _locale = locale;
+
+  // Bug fixes for IE
   var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
+  var _IEMonths = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  var _IEWeekDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
-  function _reboot () {
-    _date = new Date();
-  }
-  
-  function _getTime () {
-    return _date.getHours() + 'h' + _date.getMinutes() + 'min' + _date.getSeconds() + 'seg';
+  function _get(whatYouWant, type){
+    var dateObj = {};
+    dateObj[whatYouWant] = type;
+
+    // verify if user is in IE
+    return _navigatorIsIE ? _getForIE(whatYouWant, type) : _date.toLocaleString(_locale , dateObj);
   }
 
-  function _getDateWithInternationalFormat () {
-    return _get('year','numeric') + '-' + _get('month','2-digit') + '-' + _get('day','2-digit');
+  function _getForIE(whatYouWant, type) {
+    var toLocaleString;
+
+    switch(whatYouWant){
+      // weekday
+      case 'weekday':
+        toLocaleString = _date.getDay();
+        
+        switch(type){
+          case 'short':
+            toLocaleString = _IEWeekDays[toLocaleString].substring(0, 3);
+            break;
+
+          case 'long':
+            toLocaleString = _IEWeekDays[toLocaleString];
+            break;
+        }
+        break;
+      // end weekday
+
+      // month
+      case 'month':
+        toLocaleString = _date.getMonth();
+        
+        switch(type) {
+          case 'short':
+            toLocaleString = _IEMonths[toLocaleString].substring(0, 3);
+            break;
+
+          case 'long':
+            toLocaleString = _IEMonths[toLocaleString];
+            break;
+
+          case 'numeric':
+            toLocaleString = toLocaleString++;
+            break;
+
+          case '2-digit': 
+            toLocaleString = toLocaleString++;
+            toLocaleString = toLocaleString < 10 ? '0' + toLocaleString : toLocaleString;
+            break;
+        }
+      break;
+      // end month 
+
+      // year
+      case 'year':
+        toLocaleString = _date.getFullYear();
+        
+        switch(type) {
+          case '2-digit':
+            toLocaleString = Number(String(toLocaleString).substring(2,4));
+            break;
+        }
+      break;
+      // end year
+    }
+
+    return toLocaleString;
   }
 
   function _setDate(date){
@@ -30,18 +91,24 @@ var timeMachine = (function timeMachine(today, locale){
     _locale = locale;
   }
 
+  function _reboot () {
+    _date = new Date();
+  }
+  
+  function _getTime () {
+    return _date.getHours() + 'h' + _date.getMinutes() + 'min' + _date.getSeconds() + 'seg';
+  }
+
+  function _getDateWithInternationalFormat () {
+    return _get('year','numeric') + '-' + _get('month','2-digit') + '-' + _get('day','2-digit');
+  }
+
   function _getLocale(){
     return _locale;
   }
 
   function _getPrimitiveDate(){
     return _date;
-  }
-
-  function _get(whatYouWant, type){
-    var dateObj = {};
-    dateObj[whatYouWant] = type;
-    return _date.toLocaleString(_locale , dateObj);
   }
 
   function _getFullDate(){
@@ -78,7 +145,8 @@ var timeMachine = (function timeMachine(today, locale){
     return monthsNames;
   }
 
-  return {
+  return !_navigatorIsIE ? 
+  {
     getTime: _getTime,
     getPrimitiveDate: _getPrimitiveDate,
     getDay: _getDay,
@@ -92,6 +160,13 @@ var timeMachine = (function timeMachine(today, locale){
     getLocale: _getLocale,
     setLocale: _setLocale,
     reboot: _reboot
+  } : 
+  {
+    getDay: _getDay,
+    getWeekDay: _getWeekDay,
+    getMonth: _getMonth,
+    setDate: _setDate,
+    getYear: _getYear
   };
 
 })(new Date(), 'pt-br');
