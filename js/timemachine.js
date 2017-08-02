@@ -6,9 +6,9 @@ var timeMachine = (function timeMachine(today, locale){
   var _locale = locale;
 
   // Bug fixes for IE
-  var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
-  var _IEMonths = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  var _IEWeekDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+  var _navigatorIsIE = true;
+  var _IEMonths = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var _IEWeekDays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
 
   function _get(whatYouWant, type){
     var dateObj = {};
@@ -37,6 +37,18 @@ var timeMachine = (function timeMachine(today, locale){
         }
         break;
       // end weekday
+
+      // day
+      case 'day':
+        toLocaleString = _date.getDate();
+        
+        switch(type){
+          case '2-digit':
+            toLocaleString = toLocaleString < 10 ? '0' + toLocaleString : toLocaleString;
+            break;
+        }
+        break;
+      // end day
 
       // month
       case 'month':
@@ -82,7 +94,7 @@ var timeMachine = (function timeMachine(today, locale){
   function _setDate(date){
     date = date.split('-');
     date = date[1] + '/' + date[2] + '/' + date[0];
-    _date = new Date(Date.parse(date).toLocaleString().replace(/\u200E/g, ''));
+    _date = new Date(date);
     
     return true;
   }
