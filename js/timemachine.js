@@ -18,6 +18,11 @@ var timemachine = (function timeMachine(today, locale) {
         return _navigatorIsIE ? _getForIE(whatYouWant, type) : _date.toLocaleString(_locale, dateObj);
       }
 
+      function _getMonthByNumber (number) {
+        number--;
+        return ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'][number];
+      }
+
       function _getForIE(whatYouWant, type) {
         var toLocaleString;
 
@@ -172,7 +177,8 @@ var timemachine = (function timeMachine(today, locale) {
           getLocale: _getLocale,
           setLocale: _setLocale,
           reboot: _reboot,
-          getISODate: _getISODate
+          getISODate: _getISODate,
+          getMonthByNumber: _getMonthByNumber
         } :
         {
           getDay: _getDay,
@@ -181,7 +187,8 @@ var timemachine = (function timeMachine(today, locale) {
           setDate: _setDate,
           getYear: _getYear,
           getFullDate: _getFullDate,
-          getISODate: _getISODate
+          getISODate: _getISODate,
+          getMonthByNumber: _getMonthByNumber
         };
 
     })(new Date(), 'pt-br');
