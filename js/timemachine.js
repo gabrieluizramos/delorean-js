@@ -11,11 +11,10 @@ var timemachine = (function timeMachine(today, locale) {
       var _IEWeekDays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
 
       function _get(whatYouWant, type) {
-        var dateObj = {};
+        var dateObj = {timeZone: 'UTC'};
         dateObj[whatYouWant] = type;
-
         // verify if user is in IE
-        return _navigatorIsIE ? _getForIE(whatYouWant, type) : _date.toLocaleString(_locale, dateObj);
+        return _navigatorIsIE ? _getForIE(whatYouWant, type) : _date.toLocaleDateString(_locale, dateObj);
       }
 
       function _getMonthByNumber (number) {
@@ -69,11 +68,11 @@ var timemachine = (function timeMachine(today, locale) {
                 break;
 
               case 'numeric':
-                toLocaleString = toLocaleString++;
+                toLocaleString++;
                 break;
 
               case '2-digit':
-                toLocaleString = toLocaleString++;
+                toLocaleString++;
                 toLocaleString = toLocaleString < 10 ? '0' + toLocaleString : toLocaleString;
                 break;
             }
@@ -97,8 +96,7 @@ var timemachine = (function timeMachine(today, locale) {
       }
 
       function _setDate(date) {
-        date = date.split('-');
-        date = date[1] + '/' + date[2] + '/' + date[0];
+        date += 'T00:00:00';
         _date = new Date(date);
 
         return true;
