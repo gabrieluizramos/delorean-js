@@ -1,6 +1,6 @@
 {
   "name": "@gabrieluizramos/delorean-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a javascript library to help you travel through time",
   "main": "index.js",
   "scripts": {
