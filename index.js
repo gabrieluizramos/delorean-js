@@ -1,1 +1,1 @@
-const delorean = require('./delorean');
+module.exports = require('./delorean');
