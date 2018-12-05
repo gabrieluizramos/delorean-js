@@ -1,12 +1,17 @@
-var timemachine = (function timeMachine(today, locale) {
+module.exports =  (function delorean(today, locale) {
 
   var _date = today;
   var _locale = locale;
 
   // Bug fixes for IE
-  var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
-  var _IEMonths = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-  var _IEWeekDays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  var window = window || global;
+  var _navigatorIsIE, _IEMonths, _IEWeekDays;
+
+  if (window.navigator && window.navigator.userAgent) {
+    var _navigatorIsIE = window.navigator.userAgent.indexOf('MSIE') > 0;
+    var _IEMonths = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    var _IEWeekDays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  }
 
   function _get(whatYouWant, type) {
     var dateObj = { timeZone: 'UTC' };
